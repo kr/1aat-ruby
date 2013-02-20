@@ -34,7 +34,9 @@ loop do
     puts "Client waiting ..."
     sleep 3
     client.write "HTTP/1.1 200 OK\r\n"
-    client.write "Content-length: #{body.bytesize}\r\n"
+    client.write "Content-Length: #{body.bytesize}\r\n"
+    client.write "Content-Type: text/plain\r\n"
+    client.write "Connection: close\r\n"
     client.write "\r\n"
     client.write body
     server = open_it
