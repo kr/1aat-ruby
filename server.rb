@@ -1,5 +1,7 @@
 require 'socket'
 
+$stdout.sync = true
+
 port = (ENV['PORT'] || 8080).to_i
 
 loop do
@@ -20,7 +22,8 @@ loop do
     client.puts "HTTP 200 OK\r\n"
     client.puts "\r\n"
     client.puts "Hello World"
-  rescue
+  rescue e
+    puts e
   end
   client.close
   puts "Client done."
