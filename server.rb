@@ -25,7 +25,7 @@ server = open_it
 loop do
   client = server.accept
 
-  is_http = !!timeout(0.5) do
+  is_http = !!timeout(0.9) do
     client.gets["HTTP"]
   end rescue false
 
@@ -33,10 +33,10 @@ loop do
     server.close
     puts "Client waiting ..."
     sleep 3
-    client.puts "HTTP/1.0 200 OK\r\n"
-    client.puts "Content-length: #{body.bytesize}\r\n"
-    client.puts "\r\n"
-    client.puts body
+    client.write "HTTP/1.1 200 OK\r\n"
+    client.write "Content-length: #{body.bytesize}\r\n"
+    client.write "\r\n"
+    client.write body
     server = open_it
   end
   client.close
