@@ -16,11 +16,11 @@ loop do
 
   puts "Client waiting ..."
   sleep 3
-  r, w, e = IO.select([client], nil, nil, 0.1)
-  if r.any?
+  begin
     client.puts "HTTP 200 OK\r\n"
     client.puts "\r\n"
     client.puts "Hello World"
+  rescue
   end
   client.close
   puts "Client done."
