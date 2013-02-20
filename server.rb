@@ -31,6 +31,12 @@ loop do
 
   if is_http
     server.close
+    loop do
+      s = client.gets
+      if s == "\r\n"
+        break
+      end
+    end
     puts "Client waiting ..."
     sleep 3
     client.write "HTTP/1.1 200 OK\r\n"
