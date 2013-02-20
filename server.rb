@@ -3,26 +3,29 @@ require 'timeout'
 
 $stdout.sync = true
 
-port = (ENV['PORT'] || 8080).to_i
+$port = (ENV['PORT'] || 8080).to_i
 
-is_http = true
-
-loop do
-  if is_http
-    puts "Listening on #{port} ..."
-    server = TCPServer.new(port)
+def open_it
+    puts "Listening on #{$port} ..."
+    server = TCPServer.new($port)
 
     server.setsockopt(Socket::SOL_SOCKET,Socket::SO_REUSEADDR, true)
 
     linger = [1, 0].pack('ii')
     server.setsockopt(Socket::SOL_SOCKET, Socket::SO_LINGER, linger)
-  end
+    return server
+end
 
+is_http = true
+
+server = open_it
+
+loop do
   client = server.accept
 
-  is_http = !!timeout(0.1) do
+  is_http = !!timeout(0.5) do
     client.gets["HTTP"]
-  end
+  end rescue false
 
   if is_http
     server.close
@@ -31,6 +34,7 @@ loop do
     client.puts "HTTP 200 OK\r\n"
     client.puts "\r\n"
     client.puts "Hello World"
+    server = open_it
   end
   client.close
   puts "Client done."
