@@ -33,8 +33,7 @@ loop do
     server.close
     puts "Client waiting ..."
     sleep 3
-    client.puts "HTTP 200 OK\r\n"
-    client.puts "Content-Length: #{body.bytesize}"
+    client.puts "HTTP/1.0 200 OK\r\n"
     client.puts "\r\n"
     client.puts body
     server = open_it
