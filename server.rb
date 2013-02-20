@@ -3,6 +3,8 @@ require 'timeout'
 
 $stdout.sync = true
 
+body = "Hello World\r\n"
+
 $port = (ENV['PORT'] || 8080).to_i
 
 def open_it
@@ -32,8 +34,9 @@ loop do
     puts "Client waiting ..."
     sleep 3
     client.puts "HTTP 200 OK\r\n"
+    client.puts "Content-Length: #{body.bytesize}"
     client.puts "\r\n"
-    client.puts "Hello World"
+    client.puts body
     server = open_it
   end
   client.close
