@@ -18,6 +18,10 @@ def open_server
     return server
 end
 
+def expo
+  -Math.log(rand())/0.5
+end
+
 server = open_server
 
 loop do
@@ -29,15 +33,16 @@ loop do
   end rescue false
 
   if is_http
-    server.close
+    #server.close
     puts "Client reading headers ..."
     loop do
       if client.gets == "\r\n"
         break
       end
     end
-    puts "Client waiting ..."
-    sleep 3
+    t = expo()
+    puts "Client waiting #{t}s..."
+    sleep t
     client.write "HTTP/1.1 200 OK\r\n"
     client.write "Content-Length: #{body.bytesize}\r\n"
     client.write "Content-Type: text/plain\r\n"
@@ -50,6 +55,6 @@ loop do
   puts "Client done."
 
   if is_http
-    server = open_server
+    #server = open_server
   end
 end
