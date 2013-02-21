@@ -37,14 +37,14 @@ loop do
       end
     end
     puts "Client waiting ..."
-    sleep 1.5
+    sleep 3
     client.write "HTTP/1.1 200 OK\r\n"
     client.write "Content-Length: #{body.bytesize}\r\n"
     client.write "Content-Type: text/plain\r\n"
     client.write "Connection: close\r\n"
     client.write "\r\n"
     client.write body
-    sleep 1.5
+    client.flush
   end
   client.close
   puts "Client done."
