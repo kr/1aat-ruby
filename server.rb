@@ -44,7 +44,7 @@ loop do
     client.write "Connection: close\r\n"
     client.write "\r\n"
     client.write body
-    sleep .5
+    sleep 0.5
   end
   client.close
   puts "Client done."
