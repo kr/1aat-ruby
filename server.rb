@@ -33,7 +33,7 @@ loop do
   end rescue false
 
   if is_http
-    #server.close
+    server.close
     puts "Client reading headers ..."
     loop do
       if client.gets == "\r\n"
@@ -55,6 +55,6 @@ loop do
   puts "Client done."
 
   if is_http
-    #server = open_server
+    server = open_server
   end
 end
