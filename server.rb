@@ -31,6 +31,7 @@ loop do
 
   if is_http
     server.close
+    puts "Client reading headers ..."
     loop do
       s = client.gets
       if s == "\r\n"
